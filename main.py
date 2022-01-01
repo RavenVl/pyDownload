@@ -1,5 +1,6 @@
-from utils import download
+from utils import download, find_links
 
 if __name__ == '__main__':
-    url = 'http://xn----7sbb4ab0aeerjehf9j.xn--p1ai/files/uploads/MP3/Protiv_aritmii.mp3'
-    download(url)
+    url = 'http://xn----7sbb4ab0aeerjehf9j.xn--p1ai/products/stojkoe-serdtse-1-4'
+    for elem in find_links(url):
+        download(elem)
