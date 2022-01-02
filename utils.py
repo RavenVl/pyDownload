@@ -4,7 +4,7 @@ from requests_html import HTMLSession
 from urllib.parse import urlparse
 
 
-def download(url):
+def download_console(url):
     eg_link = url
     response = requests.get(eg_link, stream=True)
     file_name = eg_link.split('/')[-1]
@@ -14,6 +14,14 @@ def download(url):
         for chunk in response.iter_content(chunk_size=4096):
             fout.write(chunk)
 
+def download_window(url):
+    eg_link = url
+    response = requests.get(eg_link, stream=True)
+    file_name = eg_link.split('/')[-1]
+    total = int(response.headers.get('content-length', 0))
+    with open(file_name, "wb") as f:
+        for chunk in response.iter_content(chunk_size=4096):
+            f.write(chunk)
 
 def find_links(url):
     u = urlparse(url)
