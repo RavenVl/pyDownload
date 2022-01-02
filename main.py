@@ -1,4 +1,4 @@
-from utils import download_window, find_links
+from utils import download_window, find_links_window
 import math
 import random
 import sys  # sys нужен для передачи argv в QApplication
@@ -21,16 +21,17 @@ class DowloadApp(QtWidgets.QMainWindow, MainWindow.Ui_MainWindow):
         self.setupUi(self)  # Это нужно для инициализации нашего дизайна
         self.pasteButton.clicked.connect(self.paste)
         self.findButton.clicked.connect(self.find_file)
+        self.list_file = []
 
     def paste(self):
         c = QApplication.clipboard()
         self.urlEdit.setText(c.text())
 
     def find_file(self):
-        list_file = find_links(self.urlEdit.text())
-        self.tableURL.setRowCount(len(list_file))
-        for i, url in enumerate(list_file):
-            self.tableURL.setItem(i, 0, QTableWidgetItem(url))
+        self.list_file = find_links_window(self.urlEdit.text())
+        self.tableURL.setRowCount(len(self.list_file))
+        for i, url in enumerate(self.list_file):
+            self.tableURL.setItem(i, 0, QTableWidgetItem(url[1]))
 
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication

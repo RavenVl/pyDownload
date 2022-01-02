@@ -31,6 +31,13 @@ def find_links(url):
     url_list = [prefix_url+elem.attrs['src'] for elem in r.html.find('source')]
     return url_list
 
+def find_links_window(url):
+    u_main = urlparse(url)
+    prefix_url = f'{u_main.scheme}://{u_main.netloc}'
+    session = HTMLSession()
+    r = session.get(url)
+    url_list = [(prefix_url + elem.attrs['src'], urlparse(elem.attrs['src']).path) for elem in r.html.find('source')]
+    return url_list
 
 if __name__ == '__main__':
     find_links('http://xn----7sbb4ab0aeerjehf9j.xn--p1ai/products/stojkoe-serdtse-1-4')
