@@ -14,14 +14,23 @@ def download_console(url):
         for chunk in response.iter_content(chunk_size=4096):
             fout.write(chunk)
 
-def download_window(url):
+def download_window(url,bar):
     eg_link = url
     response = requests.get(eg_link, stream=True)
     file_name = eg_link.split('/')[-1]
     total = int(response.headers.get('content-length', 0))
     with open(file_name, "wb") as f:
+        bar.setValue(0)
+        step = 4096*100/total
+        cur = 0
         for chunk in response.iter_content(chunk_size=4096):
+            cur += step
+            bar.setValue(int(cur))
+            if bar.value() >= 99:
+                bar.setValue(100)
             f.write(chunk)
+    bar.setValue(100)
+
 
 def find_links(url):
     u = urlparse(url)

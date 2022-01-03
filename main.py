@@ -21,7 +21,13 @@ class DowloadApp(QtWidgets.QMainWindow, MainWindow.Ui_MainWindow):
         self.setupUi(self)  # Это нужно для инициализации нашего дизайна
         self.pasteButton.clicked.connect(self.paste)
         self.findButton.clicked.connect(self.find_file)
+        self.downloadButton.clicked.connect(self.download_file)
         self.list_file = []
+
+    def download_file(self):
+        row = self.tableURL.currentItem().row()
+        url = self.list_file[row][0]
+        download_window(url, self.progressBar)
 
     def paste(self):
         c = QApplication.clipboard()
